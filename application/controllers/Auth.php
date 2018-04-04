@@ -95,7 +95,20 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules($config);
 
 		if($this->form_validation->run()){
-
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+			$checklogin = $this->AuthModel->checkLogin($username, $password);
+			if($checklogin){
+				$data = $checklogin;
+				$user = array(
+					'user_id' =>$data[0]['user_id'],
+					'username' => $data[0]['username'],
+					'full_name' => $data[0]['full_name'],
+					'email' => $data[0]['email']
+				);
+				$this->session->set_userdata('user' , $user);
+				redirect('home');
+			}
 		}else{
 			$actv = "login";
 			$data['actv'] = $actv;

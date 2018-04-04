@@ -24,31 +24,38 @@ class Main extends CI_Controller {
                 $this->load->model('TimelineModel');
         }
 
-	public function home()
+	public function index()
 	{
+		
+		if(isset($_SESSION['user'])){
 
-		$this->form_validation->set_rules('body','Body','required');
+			$this->form_validation->set_rules('body','Body','required');
 
-		if($this->form_validation->run())
-		{
-			$this->TimelineModel->create();
-			$this->session->set_flashdata('message', 'Status Posted Succesfully!');
-			$data['message'] = $this->session->flashdata('message');
-			$data['status'] = $this->TimelineModel->index();
-			$this->load->view('layouts/top');
-			$this->load->view('items/nav');
-			$this->load->view('pages/timeline', $data);
-			$this->load->view('layouts/bottom');
-			
-		}
-		else
-		{
-			$data['message'] = $this->session->flashdata('message');
-			$data['status'] = $this->TimelineModel->index();
-			$this->load->view('layouts/top');
-			$this->load->view('pages/timeline', $data);
-			$this->load->view('layouts/bottom');
+			if($this->form_validation->run())
+			{
 
+				$this->TimelineModel->create();
+				$this->session->set_flashdata('message', 'Status Posted Succesfully!');
+				$data['message'] = $this->session->flashdata('message');
+				$data['status'] = $this->TimelineModel->index();
+				$this->load->view('layouts/top');
+				$this->load->view('items/nav');
+				$this->load->view('pages/timeline', $data);
+				$this->load->view('layouts/bottom');
+				
+			}
+			else
+			{
+				$data['message'] = $this->session->flashdata('message');
+				$data['status'] = $this->TimelineModel->index();
+				$this->load->view('layouts/top');
+				$this->load->view('items/nav');
+				$this->load->view('pages/timeline', $data);
+				$this->load->view('layouts/bottom');
+
+			}
+		}else{
+			redirect('login');
 		}
 	}
 
@@ -57,7 +64,7 @@ class Main extends CI_Controller {
 		$id = $this->input->post('id');
 		$this->TimelineModel->delete($id);
 		$this->session->set_flashdata('message','Status has been Deleted!');
-		redirect('');
+		redirect('home');
 	}
 	public function addComment($id)
 	{
@@ -66,23 +73,19 @@ class Main extends CI_Controller {
 		if($this->form_validation->run() === FALSE)
 		{
 			$this->session->set_flashdata('message','Please fill the comment box before posting!');
-			redirect('');
+			redirect('home');
 		}
 		else
 		{
 			
 			$this->TimelineModel->addComment($id);
 			$this->session->set_flashdata('message','Comment Posted!');
-			redirect('');
+			redirect('home');
 		}
 
 		
 	}
 
-	public function ajax()
-	{
-		$this->load->view("ajax_view");
-	}
 
 	// This function call from AJAX
 	public function user_data_submit() 
@@ -94,5 +97,9 @@ class Main extends CI_Controller {
 
 		//Either you can print value or you can send value to database
 		echo json_encode($data);
+	}
+	public function logout(){
+		unset($_SESSION['user']);
+		redirect('login');
 	}
 }

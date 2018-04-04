@@ -35,4 +35,18 @@ class AuthModel extends CI_Model{
 			return true;
 		}
 	}
+
+	public function checkLogin($usr, $pass){
+
+		 $q = $this->db->query('SELECT * FROM users where username="'.$usr.'"');
+		$result = $q->result_array();
+
+		if($result){
+			if(password_verify($pass, $result[0]['password'])){
+				return $result;
+			}
+		}else{
+				return false;
+		}
+	}
 }

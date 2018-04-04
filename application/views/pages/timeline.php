@@ -1,9 +1,9 @@
 <div class="container">
 	<div class="row" style="margin-top:40px;position:relative;">
-		<div class="col-md-4">
+		<div class="col-md-3">
 			
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<?php if(isset($message)){ ?>
 			<div class="alert alert-warning alert-dismissible fade show" role="alert">
   				<strong><?php echo $message;?></strong> 
@@ -24,7 +24,7 @@
 						<textarea class="form-control" type="text" name="body"></textarea>
 					</div>
 					
-					<input type="submit" name="" me="submit" value="Post the Status!" class="btn btn-primary"/>
+					<input type="submit" name="submit" value="Post the Status!" class="btn btn-primary"/>
 					
 				</form>
 			</div>
@@ -34,9 +34,8 @@
 				<div class="col-md-12">
 					<div style="margin-top:2rem;" class="card">
 						<div class="card-body">
-							 <img  class="card-img-top" width="100" src="<?php echo base_url() ?>assets/images/gege.jpg" alt="Card image cap">
-
-								<?php echo $status['status_body']; ?>
+								<big><strong style="color:blue;"><?php echo $status['username']; ?></strong></big><br><?php echo $status['status_body']; ?><br>
+								<small style="color:grey;"><?php echo  $status['modified_at'];?></small>
 						</div>
 						<div class="form-inline" style="padding-bottom:0.5rem;">	
 							<a style="margin-left:0.5rem;"class="btn btn-sm btn-success" href="">Like</a>
@@ -57,7 +56,7 @@
 						<?php foreach ($status['comments'] as $i => $comment) { ?>
 						<div class="card" style="padding:0.5rem 2rem 0.5rem;background-color:#ededed;width:50%;margin-top:0.2rem;">
 
-							<strong><?php echo $comment['comment_by'];?></strong><?php echo $comment['comment_body']; ?>
+							<strong><?php echo $comment['username'];?></strong><?php echo $comment['comment_body']; ?>
 							<div class="form-inline">
 								<a style="margin-left:0.25rem" href=""><small>Like</small></a>
 								<a style="margin-left:0.25rem" href=""><small>Reply</small></a>
@@ -104,7 +103,7 @@
 			</div>
 			<?php } ?>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			
 		</div>
 	</div>
@@ -114,7 +113,7 @@
     dataString = $("#create").serialize();
     $.ajax({
         type:"POST",
-        url:"<?php echo base_url(); ?>main/index",
+        url:"<?php echo base_url(); ?>Main/index",
         data:dataString,
 
         success:function (data) {

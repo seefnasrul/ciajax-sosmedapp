@@ -18,9 +18,9 @@
         </a>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">My Frame</a>
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Logout</a>
+          <a class="dropdown-item" href="<?php echo base_url(); ?>profile">My Frame</a>
+          <a class="dropdown-item" href="<?php echo base_url(); ?>settings">Settings</a>
+          <a class="dropdown-item" href="<?php echo base_url(); ?>logout">Logout</a>
         </div>
       </li>
     </ul>

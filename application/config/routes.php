@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$route['logout'] ='Main/logout';
+$route['home'] ='Main/index';
+$route['login'] ='Auth/login';
 $route['register'] ='Auth/register';
 $route['addcomment/(:any)'] = 'Main/addComment/$1';
 $route['delete/(:any)'] = 'Main/Delete/$1';
